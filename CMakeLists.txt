@@ -29,7 +29,7 @@ file(GLOB_RECURSE SOURCES
 
 add_executable(${TARGET_NAME} MACOSX_BUNDLE ${SOURCES})
 target_link_libraries(${TARGET_NAME} sfml-audio sfml-graphics sfml-window sfml-system)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Knockoff)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT KnockOff)
 if(APPLE)
     file(GLOB RESOURCE_FILES "assets")
     set_source_files_properties("${RESOURCE_FILES}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
@@ -42,11 +42,11 @@ else()
     set_target_properties(${TARGET_NAME} PROPERTIES
         VS_DEBUGGER_WORKING_DIRECTORY ${WORKING_PATH}
     )
-    add_custom_command(TARGET Knockoff POST_BUILD
+    add_custom_command(TARGET KnockOff POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-graphics-d-2.dll"
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-window-d-2.dll"
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-audio-d-2.dll"
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-system-d-2.dll"
-            $<TARGET_FILE_DIR:Knockoff>)
+            $<TARGET_FILE_DIR:KnockOff>)
 endif()
