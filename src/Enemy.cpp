@@ -63,10 +63,10 @@ void Enemy::playerCollision(std::shared_ptr<Player>& playerPtr)
 	{
 		setCollisionCooldown(0.5f);
 		sf::Vector2f	velocity = getVelocity() + playerPtr->getVelocity();
-		float			scalar = Utils::vecLength(velocity);
+		float			bounceBack = Utils::vecLength(velocity);
 
-		playerPtr->setVelocity(normalDirection * scalar);
-		setVelocity(normalDirection * scalar * -0.2f);
+		playerPtr->setVelocity(normalDirection * bounceBack);
+		setVelocity(normalDirection * bounceBack * -0.2f);
 	}
 }
 
@@ -80,8 +80,8 @@ void Enemy::handleCollision(float deltaTime, ActorPtrVec& actors)
 		switch (actor->getType())
 		{
 		case ActorType::PLAYER:
-			auto playerRef = std::static_pointer_cast<Player>(actor);
-			playerCollision(playerRef);
+			auto playerPtr = std::static_pointer_cast<Player>(actor);
+			playerCollision(playerPtr);
 			break;
 		}
 	}
@@ -115,7 +115,6 @@ bool Enemy::isOutOfBounds() const
 		return true;
 	return false;
 }
-
 
 void Enemy::render(sf::RenderWindow& window)
 {

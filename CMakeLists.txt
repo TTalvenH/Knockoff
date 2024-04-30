@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 set(CMAKE_SUPPRESS_REGENERATION true)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 
-set(TARGET_NAME KnockOff)
+set(TARGET_NAME Knockoff)
 
 file(GLOB_RECURSE SOURCES
  src/*.mm
@@ -29,7 +29,7 @@ file(GLOB_RECURSE SOURCES
 
 add_executable(${TARGET_NAME} MACOSX_BUNDLE ${SOURCES})
 target_link_libraries(${TARGET_NAME} sfml-audio sfml-graphics sfml-window sfml-system)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT KnockOff)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Knockoff)
 if(APPLE)
     file(GLOB RESOURCE_FILES "assets")
     set_source_files_properties("${RESOURCE_FILES}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
@@ -42,11 +42,19 @@ else()
     set_target_properties(${TARGET_NAME} PROPERTIES
         VS_DEBUGGER_WORKING_DIRECTORY ${WORKING_PATH}
     )
-    add_custom_command(TARGET KnockOff POST_BUILD
+    add_custom_command(TARGET Knockoff POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-graphics-d-2.dll"
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-window-d-2.dll"
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-audio-d-2.dll"
             "${PROJECT_SOURCE_DIR}/build/_deps/sfml-build/lib/Debug/sfml-system-d-2.dll"
-            $<TARGET_FILE_DIR:KnockOff>)
+            $<TARGET_FILE_DIR:${TARGET_NAME}>)
+endif()
+
+if(WIN32)
+    add_custom_command(
+        TARGET Knockoff
+        COMMENT "Copy OpenAL DLL"
+        PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:Knockoff>
+        VERBATIM)
 endif()

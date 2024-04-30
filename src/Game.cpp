@@ -18,14 +18,14 @@ Game::Game()
 	, m_collisionCooldown(g_globals.clock.getElapsedTime().asSeconds())
 {
 	std::string assetPath = Resources::getAssetPath();
-	if (!m_tunes.openFromFile(assetPath + "audio/320963__littlerobotsoundfactory__loop_computer_feeling_good_00.wav"))
+	std::cout << assetPath << "audio\\320963__littlerobotsoundfactory__loop_computer_feeling_good_00.wav" << std::endl;
+	if (!m_tunes.openFromFile(assetPath + "audio\\320963__littlerobotsoundfactory__loop_computer_feeling_good_00.wav"))
 	{
 		throw std::runtime_error("Failed to initialize the game!");
 	}
 	m_tunes.setLoop(true);
 	m_tunes.setVolume(15);
 	m_tunes.play();
-	//m_window.setFramerateLimit(144);
 	m_view = m_window.getView();
 }
 
@@ -65,7 +65,7 @@ void Game::addEnemies()
 {
 	for (int i = 0; i <= g_globals.enemyLevel; i++)
 	{
-		if (i % 4 == 0 || g_globals.enemyCount == 0)
+		if (i % 5 == 0 || g_globals.enemyCount == 0)
 		{
 			g_globals.enemyCount++;
 		}

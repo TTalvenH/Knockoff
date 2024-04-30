@@ -26,17 +26,17 @@ private:
 
 	Enemy();
 
+	void handleMovement(float deltaTime);
+	void playerCollision(std::shared_ptr<Player>& playerPtr);
+	void handleCollision(float deltaTime, ActorPtrVec& actors);
+	bool isOutOfBounds() const;
+
 public:
 	Enemy(sf::Vector2f pos, BaseActor& playerRef);
 
 	sf::CircleShape	getBody() { return m_body; }
 	sf::Vector2f	getVelocity() { return m_velocity; }
 	void			setVelocity(sf::Vector2f velocity) { m_velocity = velocity; }
-
-	void handleMovement(float deltaTime);
-	void playerCollision(std::shared_ptr<Player>& playerPtr);
-	void handleCollision(float deltaTime, ActorPtrVec& actors);
-	bool isOutOfBounds() const;
 
 	void update(float deltaTime, ActorPtrVec& actors) override;
 	void render(sf::RenderWindow& window) override;

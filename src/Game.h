@@ -28,8 +28,8 @@ enum GameState
 struct GameGlobal
 {
 	unsigned int gameState = GameState::MAIN_MENU;
-	unsigned int windowWidth = 1920;
-	unsigned int windowHeight = 1080;
+	unsigned int windowWidth = 1440;
+	unsigned int windowHeight = 900;
 	unsigned int score = 0;
 	unsigned int highScore = 0;
 	unsigned int enemyCount = 0;
@@ -50,7 +50,7 @@ private:
 	float				m_deltaTime;
 	float				m_collisionCooldown;
 
-
+	
 	void emptyGame();
 	void addScore();
 	void resetGame();

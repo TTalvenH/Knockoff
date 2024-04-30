@@ -8,7 +8,7 @@
 UI::UI()
 {
 	std::string assetPath = Resources::getAssetPath();
-	if (!m_font.loadFromFile(assetPath + "fonts/Montserrat-Regular.ttf"))
+	if (!m_font.loadFromFile(assetPath + "fonts\\Montserrat-Regular.ttf"))
 	{
 		throw std::runtime_error("Failed to initialize the game!");
 	}

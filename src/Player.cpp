@@ -25,9 +25,9 @@ Player::Player(sf::Vector2f pos)
 	setPosition(pos);
 
 	std::string assetPath = Resources::getAssetPath();
-	if (!m_soundBuffers[0].loadFromFile(assetPath + "audio/hit.wav")
-		|| !m_soundBuffers[1].loadFromFile(assetPath + "audio/PowerUp.wav")
-		|| !m_soundBuffers[2].loadFromFile(assetPath + "audio/350873__cabled_mess__coin_c_02.wav"))
+	if (!m_soundBuffers[0].loadFromFile(assetPath + "audio\\hit.wav")
+		|| !m_soundBuffers[1].loadFromFile(assetPath + "audio\\PowerUp.wav")
+		|| !m_soundBuffers[2].loadFromFile(assetPath + "audio\\350873__cabled_mess__coin_c_02.wav"))
 	{
 		throw std::runtime_error("Failed to initialize player audio!");
 	}
@@ -37,7 +37,7 @@ Player::Player(sf::Vector2f pos)
 	m_sounds[1].setVolume(9.f);
 	m_sounds[1].setPitch(0.5);
 	m_sounds[2].setBuffer(m_soundBuffers[2]);
-	m_sounds[2].setVolume(100.f);
+	m_sounds[2].setVolume(70.f);
 	m_sounds[2].setPitch(0.8);
 	m_arrow.append(sf::Vertex(sf::Vector2f(), sf::Color::Transparent));
 	m_arrow.append(sf::Vertex(sf::Vector2f(), sf::Color::Transparent));
@@ -45,12 +45,12 @@ Player::Player(sf::Vector2f pos)
 
 void Player::handleMovement(float deltaTime)
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) // Start dragging
 	{
 		m_isLaunching = true;
 		m_endMousePosition = sf::Mouse::getPosition();
 		m_launchingVelocity += static_cast<sf::Vector2f>(m_startMousePosition - m_endMousePosition);
-		m_launchingVelocity *= 0.15f;
+		m_launchingVelocity *= 0.15f; //Modifier to bring velocity down to more controbable levels.
 		if (Utils::vecLength(m_launchingVelocity) > m_maxSpeed)
 		{
 			m_launchingVelocity = Utils::vectorNormalize(m_launchingVelocity) * m_maxSpeed;
@@ -64,7 +64,7 @@ void Player::handleMovement(float deltaTime)
 		m_arrow[0].color = sf::Color::Transparent;
 		m_arrow[1].color = sf::Color::Transparent;
 	}
-	if (m_isLaunching && !sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	if (m_isLaunching && !sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) // Release dragging
 	{
 		m_velocity = m_launchingVelocity;
 		m_isLaunching = false;
@@ -90,10 +90,10 @@ void Player::enemyCollision(std::shared_ptr<Enemy>& enemyPtr)
 	{
 		setCollisionCooldown(0.5f);
 		sf::Vector2f	velocity = getVelocity() + enemyPtr->getVelocity();
-		float			scalar = Utils::vecLength(velocity);
+		float			bounceBack = Utils::vecLength(velocity);
 
-		enemyPtr->setVelocity(normalDirection * scalar);
-		setVelocity(normalDirection * scalar * -0.2f);
+		enemyPtr->setVelocity(normalDirection * bounceBack);
+		setVelocity(normalDirection * bounceBack * -0.2f);
 	}
 }
 
@@ -115,6 +115,10 @@ void Player::coinCollision(std::shared_ptr<Coin>& coinPtr)
 		coinPtr->setIsVisible(false);
 		playCoinSound();
 		g_globals.score++;
+		if (g_globals.score > g_globals.highScore)
+		{
+			g_globals.highScore++;
+		}
 	}
 }
 
