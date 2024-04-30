@@ -1,4 +1,8 @@
 # Knockoff
+
+## Gameplay link:
+ 
+[![Video Thumbnail](https://raw.githubusercontent.com/TTalvenH/project_thumbnails/master/knockoff_thumbnail.png)](https://youtu.be/BEDoDLZFMak)
  
 ## Windows 11
 
