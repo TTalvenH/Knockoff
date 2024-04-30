@@ -1,6 +1,6 @@
 # Knockoff
 
-## Gameplay link:
+## Gameplay link: (Click the picture to open youtube)
  
 [![Video Thumbnail](https://raw.githubusercontent.com/TTalvenH/project_thumbnails/master/knockoff_thumbnail.png)](https://youtu.be/BEDoDLZFMak)
  
